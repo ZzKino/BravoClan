@@ -8,6 +8,7 @@ use Itzdvbravo\BravoClan\Main;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\utils\TextFormat;
+use onebone\economyapi\EconomyAPI;
 
 class Create implements Sub{
     private $plugin;
@@ -42,9 +43,12 @@ class Create implements Sub{
                 } elseif (strlen($args[1]) > 13){
                     $player->sendMessage("§eclan name can't be longer than 13 characters");
                 } else {
-                    Main::$file->setClan($args[1], $player->getName());
-                    Main::$clan->player[strtolower($player->getName())] = $args[1];
-                    $player->sendMessage("§aClan have been created, do /clan info");
+                    if(EconomyAPI::getIntance()->myMoney($player) >= 10000){
+                        Main::$file->setClan($args[1], $player->getName());
+                        Main::$clan->player[strtolower($player->getName())] = $args[1];
+                        EconomyAPI::getInstance()->reduceMoney($player, 10000);
+                        $player->sendMessage("§aClan have been created, do /clan");                        
+                    }else $player->sendMessage("You are not enough money to create clan");
                 }
             }
         }

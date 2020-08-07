@@ -23,6 +23,8 @@ use pocketmine\plugin\Plugin;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat;
 
+use Itzdvbravo\BravoClan\Forms\ClanForm;
+
 class Commands extends Command implements PluginIdentifiableCommand {
 
     /** @var Sub[] */
@@ -42,6 +44,11 @@ class Commands extends Command implements PluginIdentifiableCommand {
      */
     public function execute(CommandSender $player, string $label, array $args):bool {
         if (!isset($args[0])){
+            if($player instanceof Player){
+                $form = new ClanForm($player);
+                $form->setTitle("Clan");
+                $player->sendForm($form);                
+            }
             $player->sendMessage(TextFormat::RED . "/clan help");
             return true;
         }
