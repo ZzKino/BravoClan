@@ -57,12 +57,13 @@ Class ClanForm extends SimpleForm{
 					$form = new CreateSubForm($player);
 					$form->setTitle("CREATE FORM");
 					$form->setForm();
+					$player->sendForm($form);
 				} 
 				if($data == 1){
 					$form = new TopSubForm($player);
 					$form->setForm();
 					$form->setTitle("TOP FORM");
-					$player->sendForm();
+					$player->sendForm($form);
 				}
 			}else{
 				if($data == 0){
